@@ -29,12 +29,15 @@ class TodoItem extends HTMLElement {
         const deleteButton = this.shadowRoot!.querySelector('button')!;
         const todo = JSON.parse(this.dataset.todo || '{}');
         deleteButton.addEventListener('click', () => {
+            // Dispatch a custom delete event with the todo object
             const event = new CustomEvent('delete', { detail: todo });
             this.dispatchEvent(event);
         });
 
         const input = this.shadowRoot!.querySelector('input')!;
         input.addEventListener('change', () => {
+
+            // Dispatch a custom toggle event with the todo object
             const event = new CustomEvent('toggle', { detail: todo });
             this.dispatchEvent(event);
         });

@@ -7,6 +7,7 @@ import '../TodoInputForm';
 import '../TodoItem';
 import Flip from '../../helpers/Flip';
 import { animate } from '../../helpers/animate';
+import { EventListener } from '../../types';
 
 function loadTodo(): Todo[] {
     const todoFromStorage = JSON.parse(localStorage.getItem('todos') || '[]');
@@ -71,11 +72,12 @@ class TodoList extends HTMLElement {
             this.render();
             localStorage.setItem('todos', JSON.stringify(this.todo));
         });
-        this.shadowRoot!.querySelector('todo-input-form')!.addEventListener('submit', (e: Event) => {
-            if (!(e instanceof CustomEvent)) return;
-            const todo = (e as CustomEvent<Todo>).detail;
+        
+        // listen to the custom submit event from the todo-input-form
+        this.shadowRoot!.querySelector('todo-input-form')!.addEventListener('submit', ((e: CustomEvent<Todo>) => {
+            const todo = e .detail;
             this.todo.push(todo);
-        });
+        }) as EventListener);
     }
 
     render() {
@@ -105,21 +107,19 @@ class TodoList extends HTMLElement {
             todoItem.dataset.todo = JSON.stringify(todo);
             todoItem.dataset.flipId = String(todo.id);
 
-            todoItem.addEventListener('delete', (e) => {
-                if (!(e instanceof CustomEvent)) return;
-                const { id } = (e as CustomEvent<Todo>).detail;
+            todoItem.addEventListener('delete', ((e: CustomEvent<Todo>) => {
+                const { id } = e.detail;
                 this.todo.splice(this.todo.findIndex(todo => todo.id === id), 1);
-            });
+            }) as EventListener);
 
-            todoItem.addEventListener('toggle', (e) => {
-                if (!(e instanceof CustomEvent)) return;
-                const { id } = (e as CustomEvent<Todo>).detail;
+            todoItem.addEventListener('toggle', ((e: CustomEvent<Todo>) => {
+                const { id } = e.detail;
                 const todo = this.todo.find(todo => todo.id === id);
                 console.log('toggled', todo);
                 if (todo) {
                     todo.completed = !todo.completed;
                 }
-            });
+            }) as EventListener);
 
             todoItem.style.display = 'block';
             todoList.appendChild(todoItem);

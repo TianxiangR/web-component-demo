@@ -18,6 +18,8 @@ class TodoInputForm extends HTMLElement {
             e.preventDefault();
             const formData = new FormData(e.target as HTMLFormElement);
             const todoText = formData.get('text') as string;
+
+            // Dispatch a custom submit event with the todo object
             const event = new CustomEvent<Todo>('submit', { detail: {
                 id: Date.now(),
                 text: todoText,
