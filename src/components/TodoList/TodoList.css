@@ -1,0 +1,11 @@
+  .main-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+  }
+
+  ul {
+      list-style: none;
+      padding: 0;
+      position: relative;
+  }

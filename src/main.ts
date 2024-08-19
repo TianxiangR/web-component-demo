@@ -1,13 +1,21 @@
 import './style.css'
-import MainPage from './components/MainPage.ts'
+import './components/TodoList'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div id="main">
-    
-  </div>
+const main = document.querySelector<HTMLDivElement>('#app')!
+main.innerHTML = /*html*/`
+<style>
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  </style>
+<div class="main-container">
+  <todo-list></todo-list>
+</div>
 `
-
-const main = document.querySelector<HTMLDivElement>('#main')!
-
-const mainPage = new MainPage({});
-main.appendChild(mainPage);

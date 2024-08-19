@@ -3,3 +3,5 @@ export interface Todo {
     text: string;
     completed: boolean;
 }
+
+export interface TodoSubmitEvent extends CustomEvent<Todo> {}
