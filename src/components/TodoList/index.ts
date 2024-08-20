@@ -23,6 +23,7 @@ class TodoList extends HTMLElement {
     private todo: Reactive<Todo[]>;
     private flip: Flip;
     private isInitialRender = true;
+    private listElement: HTMLUListElement;
 
     constructor() {
         super();
@@ -30,8 +31,8 @@ class TodoList extends HTMLElement {
         const todo = loadTodo();
         this.todo = reactive(todo);
         this.shadowRoot!.appendChild(template.content.cloneNode(true));
-        const todoList = this.shadowRoot!.querySelector<HTMLUListElement>('.todo-list')!;
-        this.flip = new Flip(todoList, {
+        this.listElement = this.shadowRoot!.querySelector<HTMLUListElement>('.todo-list')!;
+        this.flip = new Flip(this.listElement, {
             flipIdAttr: 'data-flip-id',
             onAppear: (element) => {
                 element.style.transformOrigin = 'center';
@@ -68,6 +69,20 @@ class TodoList extends HTMLElement {
     }
 
     connectedCallback() {
+        this.listElement.addEventListener('delete', ((e: CustomEvent<Todo>) => {
+            const { id } = e.detail;
+            this.todo.splice(this.todo.findIndex(todo => todo.id === id), 1);
+        }) as EventListener, false);
+
+        this.listElement.addEventListener('toggle', ((e: CustomEvent<Todo>) => {
+            const { id } = e.detail;
+            const todo = this.todo.find(todo => todo.id === id);
+
+            if (todo) {
+                todo.completed = !todo.completed;
+            }
+        }) as EventListener, false);
+
         effect(() => {
             this.render();
             localStorage.setItem('todos', JSON.stringify(this.todo));
@@ -107,19 +122,19 @@ class TodoList extends HTMLElement {
             todoItem.dataset.todo = JSON.stringify(todo);
             todoItem.dataset.flipId = String(todo.id);
 
-            todoItem.addEventListener('delete', ((e: CustomEvent<Todo>) => {
-                const { id } = e.detail;
-                this.todo.splice(this.todo.findIndex(todo => todo.id === id), 1);
-            }) as EventListener);
+            // todoItem.addEventListener('delete', ((e: CustomEvent<Todo>) => {
+            //     const { id } = e.detail;
+            //     this.todo.splice(this.todo.findIndex(todo => todo.id === id), 1);
+            // }) as EventListener);
 
-            todoItem.addEventListener('toggle', ((e: CustomEvent<Todo>) => {
-                const { id } = e.detail;
-                const todo = this.todo.find(todo => todo.id === id);
-                console.log('toggled', todo);
-                if (todo) {
-                    todo.completed = !todo.completed;
-                }
-            }) as EventListener);
+            // todoItem.addEventListener('toggle', ((e: CustomEvent<Todo>) => {
+            //     const { id } = e.detail;
+            //     const todo = this.todo.find(todo => todo.id === id);
+
+            //     if (todo) {
+            //         todo.completed = !todo.completed;
+            //     }
+            // }) as EventListener);
 
             todoItem.style.display = 'block';
             todoList.appendChild(todoItem);

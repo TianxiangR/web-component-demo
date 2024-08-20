@@ -18,8 +18,6 @@ class TodoItem extends HTMLElement {
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         if (name === 'todo' && oldValue !== newValue) {
-            console.log('old', oldValue);
-            console.log('new', newValue);
             this.render();
         }
     }
@@ -30,7 +28,7 @@ class TodoItem extends HTMLElement {
         const todo = JSON.parse(this.dataset.todo || '{}');
         deleteButton.addEventListener('click', () => {
             // Dispatch a custom delete event with the todo object
-            const event = new CustomEvent('delete', { detail: todo });
+            const event = new CustomEvent('delete', { detail: todo, bubbles: true });
             this.dispatchEvent(event);
         });
 
@@ -38,7 +36,7 @@ class TodoItem extends HTMLElement {
         input.addEventListener('change', () => {
 
             // Dispatch a custom toggle event with the todo object
-            const event = new CustomEvent('toggle', { detail: todo });
+            const event = new CustomEvent('toggle', { detail: todo, bubbles: true });
             this.dispatchEvent(event);
         });
     }
