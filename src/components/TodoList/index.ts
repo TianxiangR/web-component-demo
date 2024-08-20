@@ -121,21 +121,6 @@ class TodoList extends HTMLElement {
             const todoItem = document.createElement('todo-item');
             todoItem.dataset.todo = JSON.stringify(todo);
             todoItem.dataset.flipId = String(todo.id);
-
-            // todoItem.addEventListener('delete', ((e: CustomEvent<Todo>) => {
-            //     const { id } = e.detail;
-            //     this.todo.splice(this.todo.findIndex(todo => todo.id === id), 1);
-            // }) as EventListener);
-
-            // todoItem.addEventListener('toggle', ((e: CustomEvent<Todo>) => {
-            //     const { id } = e.detail;
-            //     const todo = this.todo.find(todo => todo.id === id);
-
-            //     if (todo) {
-            //         todo.completed = !todo.completed;
-            //     }
-            // }) as EventListener);
-
             todoItem.style.display = 'block';
             todoList.appendChild(todoItem);
         });
