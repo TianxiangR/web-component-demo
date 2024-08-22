@@ -1,14 +1,44 @@
 button {
-    background-color: #00adb7;
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 10px 20px;
-    border-radius: 99999px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	padding: 10px 20px;
+	border-radius: 10px;
+	border-radius: 0 10px 10px 0;
+	outline: 1px solid grey;
+	color: grey;
+	font-weight: 200;
+	letter-spacing: 0.1rem;
+	text-transform: uppercase;
+	background-color: #eaeaea;
+	width: 6rem;
+}
+
+button:hover {
+	filter: brightness(90%);
 }
 
 input {
-    font-size: 15px;
-    padding: 10px;
-    border-radius: 10px;
+	font-size: 15px;
+	font-weight: 200;
+	letter-spacing: 1px;
+	padding: 10px;
+	border-radius: 10px;
+	border: none;
+	outline: 1px solid grey;
+	border-radius: 10px 0 0 10px;
+	width: 100%;
+}
+
+input::placeholder {
+	letter-spacing: 0.1rem;
+	padding-left: 0.3rem;
+	color: #909090;
+}
+
+form {
+	display: flex;
+	min-width: 350px;
+	max-width: 90vw;
+	transition: background-color 0.2s, border-color 0.2s;
 }

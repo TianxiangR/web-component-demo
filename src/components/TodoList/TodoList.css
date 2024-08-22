@@ -1,11 +1,11 @@
-  .main-container {
-      display: flex;
-      flex-direction: column;
-      gap: 4rem;
-  }
+.main-container {
+	display: flex;
+	flex-direction: column;
+}
 
-  ul {
-      list-style: none;
-      padding: 0;
-      position: relative;
-  }
+ul {
+	list-style: none;
+	padding: 0;
+	position: relative;
+	max-width: 90vw;
+}
