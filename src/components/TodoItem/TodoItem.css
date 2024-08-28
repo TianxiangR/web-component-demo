@@ -1,8 +1,8 @@
 li {
 	display: flex;
 	align-items: center;
-	margin-bottom: 1rem;
 	position: relative;
+	padding: 0.5rem 0;
 }
 
 :host {
@@ -12,12 +12,10 @@ li {
 :host(:not(:last-child)):after {
 	content: "";
 	position: absolute;
-	bottom: -1.1em;
-	left: 0.5em;
-	right: 0.5em;
-	height: 0.5em;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	border-top: 1px solid #e8e8e8;
-	z-index: -1;
 }
 
 input[type="checkbox"] {
