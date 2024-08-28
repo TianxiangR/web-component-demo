@@ -18,6 +18,7 @@ class TodoInputForm extends HTMLElement {
 			e.preventDefault();
 			const formData = new FormData(e.target as HTMLFormElement);
 			const todoText = formData.get("text") as string;
+			(e.target as HTMLFormElement).reset();
 
 			// Dispatch a custom submit event with the todo object
 			const event = new CustomEvent<Todo>("submit", {
@@ -30,8 +31,6 @@ class TodoInputForm extends HTMLElement {
 			if (todoText.length) {
 				this.dispatchEvent(event);
 			}
-			const input = this.shadowRoot!.querySelector("input")!;
-			input.value = "";
 		});
 	}
 
